@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #05050b;
+  --color-obsidian-light: #0a0a14;
+  --color-glass-border: rgba(255, 255, 255, 0.05);
+  --color-glass-bg: rgba(10, 10, 20, 0.6);
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-obsidian text-white/90 antialiased overflow-x-hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent overscroll bounce on mobile to keep fixed elements stable */
+  html, body {
+    height: 100%;
+    overscroll-behavior-y: contain;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-[30px] border border-glass-border bg-glass-bg rounded-2xl;
+  }
+
+  .platinum-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, #a1a1a1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .ios-tab-bar {
+    @apply fixed bottom-0 left-0 right-0 h-[84px] bg-[#05050b]/80 backdrop-blur-xl border-t border-white/5 flex justify-around items-center px-4 z-50;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .nav-item {
+    @apply flex flex-col items-center justify-center gap-1 opacity-40 transition-all duration-300;
+  }
+
+  .nav-item.active {
+    @apply opacity-100 scale-110;
+  }
+
+  /* Scrollbar hide */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}

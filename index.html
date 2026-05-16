@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Zharqyn Ledger v3.0</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+      :root {
+        --ios-hello-bg: #F5F5F7;
+        --ios-hello-text: #1D1D1F;
+        --platinum-obsidian-bg: #05050b;
+      }
+      
+      body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: var(--platinum-obsidian-bg);
+        font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      }
+
+      #splash-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--ios-hello-bg);
+        overflow: hidden;
+      }
+
+      .ios-gradient {
+        position: absolute;
+        width: 150%;
+        height: 150%;
+        filter: blur(60px);
+        opacity: 0.6;
+        z-index: -1;
+        animation: rotateGradient 20s infinite linear;
+      }
+
+      @keyframes rotateGradient {
+        0% { transform: rotate(0deg) scale(1); }
+        50% { transform: rotate(180deg) scale(1.2); }
+        100% { transform: rotate(360deg) scale(1); }
+      }
+
+      .gradient-1 { background: radial-gradient(circle, rgba(255, 59, 48, 0.4) 0%, transparent 70%); top: -20%; left: -20%; }
+      .gradient-2 { background: radial-gradient(circle, rgba(255, 159, 10, 0.4) 0%, transparent 70%); bottom: -20%; right: -20%; }
+      .gradient-3 { background: radial-gradient(circle, rgba(255, 214, 10, 0.4) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+      #hello-container {
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .handwritten-svg {
+        width: 320px;
+        height: auto;
+      }
+
+      .handwritten-path {
+        fill: none;
+        stroke: var(--ios-hello-text);
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        opacity: 0;
+      }
+
+      #root {
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        opacity: 0;
+      }
+
+      /* PWA Safe Areas */
+      .safe-area-bottom {
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="splash-screen">
+      <div class="ios-gradient gradient-1"></div>
+      <div class="ios-gradient gradient-2"></div>
+      <div class="ios-gradient gradient-3"></div>
+      
+      <div id="hello-container">
+        <!-- SVG for Handwriting "Hello Zharkyn" -->
+        <svg viewBox="0 0 400 200" class="handwritten-svg">
+          <!-- Main Hello Zharkyn path -->
+          <g fill="none" stroke="var(--ios-hello-text)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Hello -->
+            <path class="handwritten-path" d="M30,80 C30,40 50,40 50,60 L50,110 M30,85 L55,85" /> <!-- H -->
+            <path class="handwritten-path" d="M65,100 C65,90 85,90 85,100 C85,110 65,110 65,100 M65,102 L85,102" /> <!-- e -->
+            <path class="handwritten-path" d="M95,70 L95,110" /> <!-- l -->
+            <path class="handwritten-path" d="M108,70 L108,110" /> <!-- l -->
+            <path class="handwritten-path" d="M120,100 C120,85 145,85 145,100 C145,115 120,115 120,100" /> <!-- o -->
+            
+            <!-- Zharkyn (Cursive flow) -->
+            <g transform="translate(170, 0)">
+              <path class="handwritten-path" d="M10,80 L70,80 L20,120 L80,120" /> <!-- Z -->
+              <path class="handwritten-path" d="M90,70 L90,120 M90,105 C90,95 110,95 110,120" /> <!-- h -->
+              <path class="handwritten-path" d="M125,120 C125,110 145,110 145,120 L150,120 L150,110" /> <!-- a -->
+              <path class="handwritten-path" d="M165,105 C165,95 185,95 185,110 L185,105" /> <!-- r -->
+              <path class="handwritten-path" d="M200,80 L200,120 M200,105 L215,90" /> <!-- k -->
+              <path class="handwritten-path" d="M225,105 L235,125 C240,135 230,140 220,130" /> <!-- y -->
+              <path class="handwritten-path" d="M250,105 L250,120 M250,110 C250,100 270,100 270,120" /> <!-- n -->
+            </g>
+          </g>
+          <!-- Elegant reveal text fallback -->
+          <text x="50%" y="160" text-anchor="middle" font-family="'Caveat'" font-size="42" fill="var(--ios-hello-text)" opacity="0" id="zharkyn-text">Hello Zharkyn</text>
+        </svg>
+      </div>
+    </div>
+
+    <div id="root"></div>
+
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <script>
+      // PWA Manifest Generation logic
+      const manifest = {
+        name: "Zharqyn Ledger v3.0",
+        short_name: "Zharqyn",
+        start_url: "/",
+        display: "standalone",
+        background_color: "#05050b",
+        theme_color: "#05050b",
+        icons: [
+          {
+            src: "https://cdn-icons-png.flaticon.com/512/2636/2636406.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any maskable"
+          }
+        ]
+      };
+      const stringManifest = JSON.stringify(manifest);
+      const blob = new Blob([stringManifest], {type: 'application/json'});
+      const manifestURL = URL.createObjectURL(blob);
+      const link = document.createElement('link');
+      link.rel = 'manifest';
+      link.href = manifestURL;
+      document.head.appendChild(link);
+
+      // Splash Animation
+      window.onload = () => {
+        const tl = gsap.timeline();
+        
+        // Stroke animation
+        tl.to(".handwritten-path", {
+          opacity: 1,
+          duration: 0.1,
+          stagger: 0.2
+        })
+        .to(".handwritten-path", {
+          strokeDashoffset: 0,
+          duration: 1.5,
+          ease: "power2.inOut",
+          stagger: 0.3
+        })
+        .to("#zharkyn-text", {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "back.out(1.7)"
+        }, "-=0.5")
+        .to("#splash-screen", {
+          yPercent: -100,
+          opacity: 0,
+          duration: 1,
+          ease: "power4.inOut",
+          delay: 0.5
+        })
+        .to("#root", {
+          opacity: 1,
+          duration: 0.5
+        }, "-=0.5")
+        .set("#splash-screen", { display: "none" });
+      };
+    </script>
+  </body>
+</html>
+
